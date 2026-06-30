@@ -18,19 +18,12 @@ import plotly.express as px
 import warnings
 
 warnings.filterwarnings("ignore")
-
-# ---------------------------
-# Page Configuration
-# ---------------------------
 st.set_page_config(
     page_title="Bank Churn Dashboard",
     page_icon="🏦",
     layout="wide"
 )
 
-# ---------------------------
-# Load Data
-# ---------------------------
 @st.cache_data
 def load_data():
     url = "https://raw.githubusercontent.com/Livuza/ADS-April-2021/main/Assignments/Assignment%202/banking_churn.csv"
@@ -38,15 +31,10 @@ def load_data():
 
 df = load_data()
 
-# ---------------------------
-# Title
-# ---------------------------
+
 st.title("🏦 Bank Churn Analysis Dashboard")
 st.markdown("Interactive dashboard for analyzing customer churn.")
 
-# ---------------------------
-# Sidebar Filters
-# ---------------------------
 st.sidebar.header("Filters")
 
 if "Geography" in df.columns:
@@ -65,9 +53,6 @@ if "Gender" in df.columns:
     )
     df = df[df["Gender"].isin(gender)]
 
-# ---------------------------
-# Metrics
-# ---------------------------
 st.subheader("Key Metrics")
 
 col1, col2, col3, col4 = st.columns(4)
@@ -89,15 +74,8 @@ with col4:
     if "Balance" in df.columns:
         st.metric("Average Balance", f"{df['Balance'].mean():,.2f}")
 
-# ---------------------------
-# Dataset Preview
-# ---------------------------
 st.subheader("Dataset Preview")
 st.dataframe(df.head())
-
-# ---------------------------
-# Churn Distribution
-# ---------------------------
 if "Exited" in df.columns:
     st.subheader("Customer Churn Distribution")
 
@@ -112,10 +90,6 @@ if "Exited" in df.columns:
     )
 
     st.plotly_chart(fig, use_container_width=True)
-
-# ---------------------------
-# Geography Analysis
-# ---------------------------
 if "Geography" in df.columns and "Exited" in df.columns:
     st.subheader("Churn by Geography")
 
@@ -136,9 +110,6 @@ if "Geography" in df.columns and "Exited" in df.columns:
 
     st.plotly_chart(fig, use_container_width=True)
 
-# ---------------------------
-# Gender Analysis
-# ---------------------------
 if "Gender" in df.columns and "Exited" in df.columns:
     st.subheader("Churn by Gender")
 
@@ -159,9 +130,6 @@ if "Gender" in df.columns and "Exited" in df.columns:
 
     st.plotly_chart(fig, use_container_width=True)
 
-# ---------------------------
-# Age Distribution
-# ---------------------------
 if "Age" in df.columns:
     st.subheader("Customer Age Distribution")
 
@@ -174,9 +142,6 @@ if "Age" in df.columns:
 
     st.plotly_chart(fig, use_container_width=True)
 
-# ---------------------------
-# Balance Distribution
-# ---------------------------
 if "Balance" in df.columns:
     st.subheader("Balance Distribution")
 
@@ -189,9 +154,6 @@ if "Balance" in df.columns:
 
     st.plotly_chart(fig, use_container_width=True)
 
-# ---------------------------
-# Correlation Matrix
-# ---------------------------
 st.subheader("Correlation Matrix")
 
 numeric_df = df.select_dtypes(include=np.number)
@@ -207,15 +169,9 @@ fig = px.imshow(
 
 st.plotly_chart(fig, use_container_width=True)
 
-# ---------------------------
-# Summary Statistics
-# ---------------------------
 st.subheader("Summary Statistics")
 st.dataframe(df.describe())
 
-# ---------------------------
-# Download Data
-# ---------------------------
 csv = df.to_csv(index=False).encode("utf-8")
 
 st.download_button(
