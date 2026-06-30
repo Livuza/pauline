@@ -35,8 +35,14 @@ st.markdown(
             padding: 8px 18px;
             background-color: #f1f5f9;
             border-radius: 8px 8px 0 0;
+            color: #1d3557 !important;
         }
-        .stTabs [aria-selected="true"] {background-color: #dbeafe;}
+        .stTabs [data-baseweb="tab"] p {color: #1d3557 !important;}
+        .stTabs [aria-selected="true"] {
+            background-color: #dbeafe;
+            color: #1d3557 !important;
+        }
+        .stTabs [aria-selected="true"] p {color: #1d3557 !important;}
     </style>
     """,
     unsafe_allow_html=True,
@@ -63,7 +69,7 @@ df = df_raw.copy()
 # ----------------------------------------------------------------------------
 st.title("🏦 Bank Churn Analysis Dashboard")
 st.caption(
-    "An interactive overview of customer churn — explore the drivers behind "
+    "An interactive overview of customer churn. Explore the drivers behind "
     "why customers stay or leave."
 )
 st.divider()
@@ -180,7 +186,7 @@ with tab_overview:
                 fig.update_layout(coloraxis_showscale=False)
                 st.plotly_chart(fig, use_container_width=True)
     else:
-        st.info("No 'Exited' column found — churn overview unavailable.")
+        st.info("No 'Exited' column found. Churn overview unavailable.")
 
 # --- Demographics tab -------------------------------------------------------
 with tab_demographics:
